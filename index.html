@@ -206,6 +206,15 @@ footer { border-top:1px solid light-dark(#E2E9E1,#2D3D34); padding:25px clamp(18
 </div>
 <div class="toast" id="toast"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+const SUPABASE_URL = 'https://johykqlecwajgpwfwjuy.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_zdZHWdK4CZ288CF1xeBO-A_WZx8hlWX';
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+</script>
 <script>
 let usedToday = false;
 let activePlan = 'Free';
