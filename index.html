@@ -195,7 +195,43 @@ footer { border-top:1px solid light-dark(#E2E9E1,#2D3D34); padding:25px clamp(18
 </section>
 <section class="page" id="signup">
   <div class="section-head"><div><h2>Create your Earnnest account</h2><p>Worldwide access with email and phone verification.</p></div><span class="pill">Global registration</span></div>
-  <div class="panel"><div class="notice" style="margin-top:0">Prototype registration only. Account creation, email confirmation and SMS verification are not connected yet. Never enter a real password until secure authentication is enabled.</div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Full name</label><input placeholder="Your full name" autocomplete="name"></div><div class="field"><label>Country of residence</label><input placeholder="Choose your country" autocomplete="country-name"></div><div class="field"><label>Email address</label><input type="email" placeholder="you@example.com" autocomplete="email"></div><div class="field"><label>Phone number (include country code)</label><input type="tel" placeholder="+254 7XX XXX XXX" autocomplete="tel"></div><div class="field full"><button class="btn primary" onclick="toast('Registration preview only — account services are not connected.')">Continue to verification</button></div></div></div>
+ <div class="panel">
+  <div class="notice" style="margin-top:0">
+    Create your account using your email and a strong password. Email confirmation will be required.
+  </div>
+
+  <div class="form-grid" style="margin-top:18px">
+    <div class="field">
+      <label>Full name</label>
+      <input id="signupFullname" placeholder="Your full name" autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label>Country of residence</label>
+      <input id="signupCountry" placeholder="Choose your country" autocomplete="country-name">
+    </div>
+
+    <div class="field">
+      <label>Email address</label>
+      <input id="signupEmail" type="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+
+    <div class="field">
+      <label>Phone number (include country code)</label>
+      <input id="signupPhone" type="tel" placeholder="+254 7XX XXX XXX" autocomplete="tel">
+    </div>
+
+    <div class="field full">
+      <label>Password</label>
+      <input id="signupPassword" type="password" placeholder="Create a strong password" autocomplete="new-password">
+    </div>
+
+    <div class="field full">
+      <button class="btn primary" id="signupButton" type="button">Create account</button>
+      <p id="signupMessage" style="font-size:12px" aria-live="polite"></p>
+    </div>
+  </div>
+</div>
 </section>
 <section class="page" id="profile">
   <div class="section-head"><div><h2>Payment profile</h2><p>Keep payout details accurate and protected.</p></div></div>
