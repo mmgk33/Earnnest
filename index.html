@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earnnest — Work without borders</title>
+<style>
+:root {
+  --site-primary: #123F36;
+  --site-on-primary: #FFFFFF;
+  --site-secondary: #E9B95F;
+  --site-on-secondary: #1B241F;
+  --site-background: #F5F7F2;
+  --site-on-background: #18231F;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); }
+button, input { font: inherit; }
+.app { min-height: 100vh; width: 100%; background-color: light-dark(var(--site-background), #111B18); color: light-dark(var(--site-on-background), #EDF3EF); border-radius: 0; }
+.topbar { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px clamp(18px,5vw,72px); border-bottom:1px solid light-dark(#E3E9E2,#293831); background:light-dark(#FFFFFF,#17231F); position:sticky; top:0; z-index:5; }
+.brand { display:flex; align-items:center; gap:11px; font-weight:800; letter-spacing:-.5px; font-size:19px; }
+.logo { width:37px; height:37px; border-radius:13px; display:grid; place-items:center; color:var(--site-on-primary); background:var(--site-primary); font-weight:900; }
+.brand small { display:block; font-size:9px; letter-spacing:2px; color:#7C8B83; margin-top:1px; font-weight:700; }
+.nav { display:flex; gap:7px; align-items:center; }
+.nav button { border:0; background:transparent; color:inherit; padding:10px 13px; border-radius:12px; cursor:pointer; font-size:13px; font-weight:650; }
+.nav button.active, .nav button:hover { background:light-dark(#EAF0E9,#263A32); color:light-dark(#123F36,#E7C477); }
+.top-right { display:flex; align-items:center; gap:10px; }
+.pill { padding:8px 11px; border:1px solid light-dark(#E0E8DF,#35463E); border-radius:999px; font-size:11px; color:light-dark(#51645A,#C3D0C8); }
+.avatar { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#E8D9BC; color:#284437; font-weight:800; font-size:12px; }
+main { max-width:1220px; margin:auto; padding:38px clamp(18px,5vw,48px) 70px; }
+.hero { display:grid; grid-template-columns:1.3fr .7fr; gap:26px; align-items:stretch; }
+.hero-copy { background:var(--site-primary); color:#F8FBF7; border-radius:calc(26px * var(--site-radius-scale)); padding:clamp(26px,4vw,48px); position:relative; overflow:hidden; }
+.hero-copy:after { content:""; position:absolute; width:260px; height:260px; border:1px solid rgba(255,255,255,.12); border-radius:50%; right:-65px; top:-95px; box-shadow:0 0 0 28px rgba(255,255,255,.035),0 0 0 58px rgba(255,255,255,.025); opacity:var(--site-decoration-opacity); }
+.eyebrow { text-transform:uppercase; letter-spacing:2px; font-size:10px; font-weight:800; color:#DCC17F; }
+h1 { font-family:var(--site-font-heading); font-size:calc(clamp(34px,5vw,58px) * var(--site-heading-scale)); line-height:1.04; letter-spacing:-2.5px; max-width:650px; margin:18px 0 15px; }
+.hero-copy p { max-width:530px; color:#D5E2DA; line-height:1.65; font-size:14px; }
+.actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:25px; }
+.btn { border:0; cursor:pointer; border-radius:12px; padding:12px 17px; font-weight:750; font-size:12px; transition:.18s; }
+.btn.primary { background:var(--site-secondary); color:#1C2A23; }
+.btn.light { background:#F4F7F2; color:#163E34; }
+.btn.outline { background:transparent; border:1px solid light-dark(#CAD7CB,#50645A); color:inherit; }
+.btn:hover { transform:translateY(-1px); filter:brightness(1.03); }
+.trust-card { background:light-dark(#FFFFFF,#192720); border:1px solid light-dark(#E4EAE2,#2C3C34); border-radius:calc(26px * var(--site-radius-scale)); padding:27px; display:flex; flex-direction:column; justify-content:space-between; }
+.trust-head { display:flex; justify-content:space-between; align-items:center; }
+.shield { width:43px; height:43px; display:grid; place-items:center; border-radius:14px; background:#EAF2E8; color:#225744; font-size:20px; }
+.live { color:#26875B; font-size:10px; font-weight:800; background:#EAF6EE; border-radius:99px; padding:7px 10px; }
+.trust-card h2 { font-size:21px; letter-spacing:-.7px; margin:20px 0 7px; }
+.trust-card p { font-size:12px; color:light-dark(#738178,#B0BDB5); line-height:1.6; }
+.trust-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+.trust-stats div { border-top:1px solid light-dark(#E8EDE7,#34433B); padding-top:13px; }
+.trust-stats b { display:block; font-size:17px; }
+.trust-stats span { font-size:10px; color:#87958C; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:15px; margin:37px 0 17px; }
+.section-head h2 { margin:0; font-size:21px; letter-spacing:-.7px; }
+.section-head p { margin:5px 0 0; color:light-dark(#78867D,#A7B5AC); font-size:12px; }
+.text-link { border:0; background:none; color:light-dark(#24664D,#DDBE70); font-size:12px; font-weight:800; cursor:pointer; }
+.metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; margin-top:19px; }
+.metric { background:light-dark(#FFFFFF,#192720); border:1px solid light-dark(#E4EAE2,#2C3C34); border-radius:17px; padding:17px; }
+.metric .label { color:#87958C; font-size:10px; font-weight:700; }
+.metric strong { display:block; font-size:22px; margin:9px 0 3px; letter-spacing:-.7px; }
+.metric small { font-size:10px; color:#2C9463; }
+.task-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.task { background:light-dark(#FFFFFF,#192720); border:1px solid light-dark(#E4EAE2,#2C3C34); border-radius:18px; padding:19px; }
+.task-top { display:flex; justify-content:space-between; align-items:center; }
+.task-icon { width:39px; height:39px; display:grid; place-items:center; border-radius:13px; background:light-dark(#EDF3EC,#273B31); font-size:18px; }
+.tag { font-size:9px; font-weight:800; color:#36785A; background:#EAF4EB; padding:6px 8px; border-radius:99px; }
+.task h3 { font-size:14px; margin:15px 0 6px; }
+.task p { color:light-dark(#7B8980,#A7B5AC); font-size:11px; line-height:1.55; min-height:35px; }
+.task-foot { display:flex; justify-content:space-between; align-items:center; border-top:1px solid light-dark(#E8EDE7,#34433B); padding-top:13px; margin-top:13px; }
+.task-foot b { font-size:13px; }
+.task-foot span { font-size:10px; color:#89968E; }
+.task-foot button { border:0; color:light-dark(#245D47,#E3C477); background:none; font-size:11px; font-weight:800; cursor:pointer; }
+.banner { display:flex; align-items:center; justify-content:space-between; gap:20px; background:light-dark(#F0E9D8,#2A3026); border-radius:19px; padding:22px 25px; margin-top:24px; }
+.banner h3 { margin:0 0 5px; font-size:15px; }
+.banner p { margin:0; font-size:11px; color:light-dark(#6D7569,#C2C5B7); line-height:1.5; }
+.panel { background:light-dark(#FFFFFF,#192720); border:1px solid light-dark(#E4EAE2,#2C3C34); border-radius:20px; padding:24px; }
+.plans { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; }
+.plan { border:1px solid light-dark(#E3E9E1,#35463D); border-radius:17px; padding:18px; background:light-dark(#FFFFFF,#1A2922); }
+.plan.featured { border:2px solid #D5AD55; }
+.plan h3 { font-size:14px; margin:0 0 8px; }
+.price { font-size:25px; font-weight:850; letter-spacing:-1px; }
+.price small { font-size:10px; color:#849188; font-weight:600; letter-spacing:0; }
+.usd { font-size:10px; color:#859188; margin:4px 0 14px; }
+.plan ul { padding-left:16px; color:light-dark(#69776E,#B1BDB5); font-size:10px; line-height:2; min-height:80px; }
+.plan .btn { width:100%; margin-top:5px; }
+.notice { background:light-dark(#F7F4EA,#292D24); border-left:3px solid #D5AD55; border-radius:8px; padding:13px 15px; color:light-dark(#626A5F,#C3C5B8); font-size:11px; line-height:1.55; margin-top:17px; }
+.ref-box { display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center; }
+.ref-code { font-size:22px; font-weight:850; letter-spacing:2px; color:light-dark(#205B45,#E4C477); margin:10px 0; }
+.ref-progress { height:8px; background:light-dark(#E7EDE5,#35443B); border-radius:99px; overflow:hidden; margin:12px 0 7px; }
+.ref-progress span { display:block; height:100%; width:40%; background:#D9B45F; border-radius:99px; }
+.ref-box p { color:#859188; font-size:11px; line-height:1.5; }
+.copy { white-space:nowrap; }
+.page { display:none; }
+.page.active { display:block; }
+.task-list { display:grid; gap:12px; }
+.dashboard-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.dashboard-card { background:light-dark(#FFFFFF,#192720); border:1px solid light-dark(#E4EAE2,#2C3C34); border-radius:18px; padding:19px; }
+.dashboard-card h3 { font-size:13px; margin:0 0 10px; }
+.dashboard-card strong { display:block; font-size:24px; letter-spacing:-.7px; margin:8px 0 4px; }
+.dashboard-card p { color:light-dark(#7B8980,#A7B5AC); font-size:11px; line-height:1.55; margin:5px 0; }
+.dashboard-wide { grid-column:span 2; }
+.dashboard-line { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid light-dark(#E8EDE7,#34433B); font-size:11px; }
+.dashboard-line:last-child { border-bottom:0; }
+.task-row { display:flex; align-items:center; justify-content:space-between; gap:15px; border:1px solid light-dark(#E5EBE3,#34443B); border-radius:14px; padding:15px; }
+.task-row h3 { font-size:13px; margin:0 0 4px; }
+.task-row p { font-size:10px; color:#859188; margin:0; }
+.task-row .btn { padding:9px 12px; }
+input { background:light-dark(#FFFFFF,#14211B); border:1px solid light-dark(#DCE5DB,#3B4B42); border-radius:10px; color:inherit; padding:11px 12px; width:100%; outline:none; }
+input:focus { border-color:#B99648; box-shadow:0 0 0 3px rgba(217,180,95,.15); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; max-width:600px; }
+.field label { display:block; font-size:10px; font-weight:750; margin-bottom:6px; color:#859188; }
+.field.full { grid-column:1/-1; }
+footer { border-top:1px solid light-dark(#E2E9E1,#2D3D34); padding:25px clamp(18px,5vw,72px); display:flex; justify-content:space-between; gap:15px; color:#87958C; font-size:10px; }
+.toast { position:fixed; bottom:22px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#173E33; color:white; padding:12px 17px; border-radius:12px; font-size:12px; box-shadow:0 10px 30px #0002; transition:.25s; z-index:10; }
+.toast.show { opacity:1; transform:translate(-50%,0); }
+@media(max-width:850px) { .hero {grid-template-columns:1fr;} .metrics {grid-template-columns:repeat(2,1fr);} .task-grid {grid-template-columns:repeat(2,1fr);} .plans {grid-template-columns:repeat(2,1fr);} .nav {overflow:auto;} }
+@media(max-width:560px) { .topbar {flex-wrap:wrap;} .nav {order:3;width:100%;} .top-right {margin-left:auto;} main {padding-top:22px;} .task-grid,.plans {grid-template-columns:1fr;} .metrics {gap:8px;} .metric {padding:13px;} .metric strong {font-size:18px;} .banner,.ref-box {grid-template-columns:1fr;display:grid;} .form-grid {grid-template-columns:1fr;} .field.full {grid-column:auto;} footer {flex-direction:column;} }
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">E</div><div>Earnnest<small>WORK WITHOUT BORDERS</small></div></div>
+  <nav class="nav" aria-label="Main navigation">
+    <button class="active" data-page="overview">Overview</button><button data-page="tasks">Find work</button><button data-page="dashboard">Dashboard</button><button data-page="plans">Membership</button><button data-page="referrals">Referrals</button><button data-page="login">Log in</button><button data-page="signup">Sign up</button>
+  </nav>
+  <div class="top-right"><span class="pill">🇰🇪 KES · Global</span><div class="avatar">MK</div></div>
+</header>
+<main>
+<section class="page active" id="overview">
+  <div class="hero">
+    <div class="hero-copy"><div class="eyebrow">A world of flexible digital work</div><h1>Make your skills work <span style="color:#E9C879">for you.</span></h1><p>Discover flexible online tasks in AI data, transcription, content quality and community support. Built in Kenya, open to talent everywhere.</p><div class="actions"><button class="btn primary" onclick="showPage('tasks')">Explore opportunities ↗</button><button class="btn light" onclick="showPage('plans')">View membership</button></div></div>
+    <aside class="trust-card"><div><div class="trust-head"><div class="shield">✓</div><span class="live">● DEMO PLATFORM</span></div><h2>Clear work. Clear rules.</h2><p>Transparent task guidelines, visible reward estimates and straightforward account controls. No guaranteed earnings — every task is subject to review and client approval.</p></div><div class="trust-stats"><div><b>4 categories</b><span>Task opportunities</span></div><div><b>24/7 access</b><span>Browse any time</span></div></div></aside>
+  </div>
+  <div class="metrics"><div class="metric"><span class="label">AVAILABLE TASK TYPES</span><strong>04</strong><small>Across digital work</small></div><div class="metric"><span class="label">YOUR DAILY ROLE OPENS</span><strong id="dailyCount">1 / 1</strong><small>Free access · resets every 24h</small></div><div class="metric"><span class="label">DEMO WALLET</span><strong>KSh 0.00</strong><small>Not real funds</small></div><div class="metric"><span class="label">REFERRAL PROGRESS</span><strong>2 / 5</strong><small>Illustrative demo data</small></div></div>
+  <div class="section-head"><div><h2>Explore work categories</h2><p>Short, skill-based digital tasks with clear expectations.</p></div><button class="text-link" onclick="showPage('tasks')">See all opportunities →</button></div>
+  <div class="task-grid">
+    <article class="task"><div class="task-top"><div class="task-icon">✳</div><span class="tag">AI & DATA</span></div><h3>AI response evaluation</h3><p>Rate AI answers for helpfulness, accuracy and clarity.</p><div class="task-foot"><div><b>From $0.20</b><br><span>Per approved task</span></div><button onclick="applyTask('AI response evaluation')">View role ↗</button></div></article>
+    <article class="task"><div class="task-top"><div class="task-icon">⌁</div><span class="tag">LANGUAGE</span></div><h3>Audio transcription</h3><p>Turn short audio clips into clean, accurate text.</p><div class="task-foot"><div><b>From $0.40</b><br><span>Per approved minute</span></div><button onclick="applyTask('Audio transcription')">View role ↗</button></div></article>
+    <article class="task"><div class="task-top"><div class="task-icon">◈</div><span class="tag">COMMUNITY</span></div><h3>Chat moderation</h3><p>Review user conversations against clear safety rules.</p><div class="task-foot"><div><b>From $2.00</b><br><span>Per approved hour</span></div><button onclick="applyTask('Chat moderation')">View role ↗</button></div></article>
+  </div>
+  <div class="banner"><div><h3>Grow your access by sharing opportunity</h3><p>Invite people who may benefit. Five verified, active referrals can unlock a complimentary Plus membership in this demo model.</p></div><button class="btn primary" onclick="showPage('referrals')">View referral progress</button></div>
+</section>
+<section class="page" id="dashboard">
+  <div class="section-head"><div><h2>Member dashboard</h2><p>Your work activity, earnings and account overview in one place.</p></div><span class="pill">DEMO MEMBER VIEW</span></div>
+  <div class="notice" style="margin-top:0">This dashboard uses sample information only. Supabase accounts, task applications, approved earnings and payout records are not connected yet. No balance shown here represents real money.</div>
+  <div class="dashboard-grid" style="margin-top:16px">
+    <article class="dashboard-card"><h3>Account profile</h3><strong>Welcome, member</strong><p>Email and phone verification: not connected</p><button class="btn outline" onclick="showPage('profile')">Payment profile</button></article>
+    <article class="dashboard-card"><h3>Available role opens</h3><strong>1 / 1</strong><p>Illustrative free-tier allowance. A real rolling 24-hour limit needs server-side enforcement.</p><button class="btn outline" onclick="showPage('tasks')">Browse work</button></article>
+    <article class="dashboard-card"><h3>Membership</h3><strong>Free</strong><p>Optional upgrades: Starter, Plus, Pro and Global.</p><button class="btn outline" onclick="showPage('plans')">View membership</button></article>
+    <article class="dashboard-card"><h3>Approved earnings</h3><strong>KSh 0.00</strong><p>Sample wallet balance · no real funds recorded</p></article>
+    <article class="dashboard-card"><h3>Pending review</h3><strong>KSh 0.00</strong><p>Tasks awaiting client review in this sample view</p></article>
+    <article class="dashboard-card"><h3>Withdrawals</h3><strong>None yet</strong><p>Planned: M-Pesa for supported Kenyan accounts and international payout providers where available.</p><button class="btn outline" onclick="showPage('profile')">Manage payout details</button></article>
+    <article class="dashboard-card dashboard-wide"><h3>Recent task activity</h3><div class="dashboard-line"><span>No applications submitted</span><span>—</span></div><div class="dashboard-line"><span>Completed tasks</span><span>0</span></div><div class="dashboard-line"><span>Tasks awaiting approval</span><span>0</span></div><p>When live task listings are connected, this area will show application status, client review and approved rewards.</p></article>
+    <article class="dashboard-card"><h3>Referral progress</h3><strong>2 / 5</strong><p>Five verified active referrals unlock one complimentary month of Plus. Referral rewards never control withdrawals.</p><button class="btn outline" onclick="showPage('referrals')">View referrals</button></article>
+  </div>
+</section>
+<section class="page" id="tasks">
+  <div class="section-head"><div><h2>Find your next task</h2><p>Free accounts can open one role every rolling 24 hours. Paid access can increase role discovery limits.</p></div><span class="pill">4 categories · demo listings</span></div>
+  <div class="panel" style="margin-bottom:16px"><div class="eyebrow" style="color:#9B7B35">YOUR ACCESS</div><div style="display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:8px"><div><b id="accessText">Free access · 1 role open per 24 hours</b><p style="font-size:11px;color:#87958C;margin:5px 0 0">Your role-open allowance resets 24 hours after use.</p></div><button class="btn primary" onclick="showPage('plans')">Compare plans</button></div></div>
+  <div class="task-list">
+    <div class="task-row"><div><h3>AI response evaluation</h3><p>AI training · English fluency · 10–15 min per batch</p></div><button class="btn outline" onclick="applyTask('AI response evaluation')">Open role</button></div>
+    <div class="task-row"><div><h3>Audio transcription</h3><p>Transcription · Listening accuracy · Short audio clips</p></div><button class="btn outline" onclick="applyTask('Audio transcription')">Open role</button></div>
+    <div class="task-row"><div><h3>Chat moderation</h3><p>Trust & safety · Policy reading · Shift-based</p></div><button class="btn outline" onclick="applyTask('Chat moderation')">Open role</button></div>
+    <div class="task-row"><div><h3>Search relevance rating</h3><p>Data quality · Research · Compare search results</p></div><button class="btn outline" onclick="applyTask('Search relevance rating')">Open role</button></div>
+  </div>
+  <div class="notice">Task names and reward examples are illustrative placeholders, not live vacancies or guaranteed rates. A real platform must publish verified client briefs, qualification criteria, review rules and payment terms before accepting workers.</div>
+</section>
+<section class="page" id="plans">
+  <div class="section-head"><div><h2>Membership options</h2><p>Optional access upgrades. Membership does not buy work or guarantee income.</p></div><span class="pill">KES · USD estimates</span></div>
+  <div class="plans">
+    <article class="plan"><h3>Starter</h3><div class="price">KSh 40 <small>/ month</small></div><div class="usd">≈ $0.31 USD</div><ul><li>3 role opens per day</li><li>Skills profile tools</li><li>Standard support</li></ul><button class="btn outline" onclick="choosePlan('Starter · KSh 40')">Choose Starter</button></article>
+    <article class="plan"><h3>Plus</h3><div class="price">KSh 250 <small>/ month</small></div><div class="usd">≈ $1.92 USD</div><ul><li>5 role opens per day</li><li>Saved task searches</li><li>Priority helpdesk</li></ul><button class="btn outline" onclick="choosePlan('Plus · KSh 250')">Choose Plus</button></article>
+    <article class="plan featured"><div class="tag" style="display:inline-block;margin-bottom:9px">POPULAR</div><h3>Pro</h3><div class="price">KSh 500 <small>/ month</small></div><div class="usd">≈ $3.85 USD</div><ul><li>10 role opens per day</li><li>Advanced profile tools</li><li>Priority task alerts</li></ul><button class="btn primary" onclick="choosePlan('Pro · KSh 500')">Choose Pro</button></article>
+    <article class="plan"><h3>Global</h3><div class="price">KSh 1,000 <small>/ month</small></div><div class="usd">≈ $7.69 USD</div><ul><li>Unlimited role browsing</li><li>All profile tools</li><li>Priority support</li></ul><button class="btn outline" onclick="choosePlan('Global · KSh 1,000')">Choose Global</button></article>
+  </div>
+  <div class="notice"><b>Important:</b> These are proposed optional membership prices for the prototype, not payment requests. KSh-to-USD estimates use an indicative rate of about KSh 130 per US$1 on 30 Oct 2026; actual conversion and provider fees may differ. Membership must never be described as payment verification, and workers must be able to withdraw approved earnings without buying a plan or recruiting others.</div>
+</section>
+<section class="page" id="referrals">
+  <div class="section-head"><div><h2>Invite your community</h2><p>Referral rewards are optional. Your earnings and withdrawals should never depend on recruiting.</p></div><span class="pill">Community rewards</span></div>
+  <div class="panel ref-box"><div><div class="eyebrow" style="color:#9B7B35">YOUR INVITE CODE</div><div class="ref-code">KAZI-MK24</div><p>Share your invite link with people who genuinely want to explore digital work.</p><div class="ref-progress"><span></span></div><b style="font-size:12px">2 of 5 active referrals</b><p>Five verified active referrals unlock one complimentary month of Plus membership in this sample programme. No deposit or purchase is required from invitees.</p></div><button class="btn primary copy" onclick="copyInvite()">Copy invite link</button></div>
+  <div class="section-head"><div><h2>How active referrals work</h2><p>Transparent rules help protect everyone.</p></div></div>
+  <div class="task-grid"><article class="task"><div class="task-icon">01</div><h3>Invite</h3><p>Your friend signs up using your unique invitation link.</p></article><article class="task"><div class="task-icon">02</div><h3>Verify</h3><p>They confirm their email and phone number. No paid verification fee.</p></article><article class="task"><div class="task-icon">03</div><h3>Participate</h3><p>They complete an approved onboarding activity to count as active.</p></article></div>
+</section>
+<section class="page" id="login">
+  <div class="section-head"><div><h2>Welcome back</h2><p>Log in to continue to your Earnnest account.</p></div><span class="pill">Member access</span></div>
+  <div class="panel"><div class="notice" style="margin-top:0">Login is a visual prototype only. Supabase authentication is not connected yet. Do not enter a real password here.</div><div class="form-grid" style="margin-top:18px"><div class="field full"><label>Email address</label><input type="email" placeholder="you@example.com" autocomplete="email"></div><div class="field full"><label>Password</label><input type="password" placeholder="Demo password only" autocomplete="off"></div><div class="field full"><button class="btn primary" onclick="toast('Login preview only — authentication is not connected.')">Log in</button></div><div class="field full"><p style="font-size:11px;color:#87958C">New to Earnnest? <button class="text-link" onclick="showPage('signup')">Create an account</button></p></div></div></div>
+</section>
+<section class="page" id="signup">
+  <div class="section-head"><div><h2>Create your Earnnest account</h2><p>Worldwide access with email and phone verification.</p></div><span class="pill">Global registration</span></div>
+  <div class="panel"><div class="notice" style="margin-top:0">Prototype registration only. Account creation, email confirmation and SMS verification are not connected yet. Never enter a real password until secure authentication is enabled.</div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Full name</label><input placeholder="Your full name" autocomplete="name"></div><div class="field"><label>Country of residence</label><input placeholder="Choose your country" autocomplete="country-name"></div><div class="field"><label>Email address</label><input type="email" placeholder="you@example.com" autocomplete="email"></div><div class="field"><label>Phone number (include country code)</label><input type="tel" placeholder="+254 7XX XXX XXX" autocomplete="tel"></div><div class="field full"><button class="btn primary" onclick="toast('Registration preview only — account services are not connected.')">Continue to verification</button></div></div></div>
+</section>
+<section class="page" id="profile">
+  <div class="section-head"><div><h2>Payment profile</h2><p>Keep payout details accurate and protected.</p></div></div>
+  <div class="panel"><div class="notice" style="margin-top:0">Demo only: this form does not save or verify payment details. Planned payout options are M-Pesa for supported Kenyan accounts and international payout providers for eligible countries. A production site must confirm country coverage, fees and processing times before enabling withdrawals. Never store M-Pesa PINs or ask users to share one-time passwords with staff.</div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Full name (as registered)</label><input placeholder="Your legal name"></div><div class="field"><label>Country of residence</label><input placeholder="Your country"></div><div class="field"><label>M-Pesa phone number (Kenya, if applicable)</label><input placeholder="+254 7XX XXX XXX" inputmode="tel"></div><div class="field"><label>International payout email / account reference</label><input placeholder="Provider details added securely later"></div><div class="field full"><label>Preferred payout currency</label><input placeholder="KES, USD, EUR, GBP, etc."></div><div class="field full"><button class="btn primary" onclick="toast('Demo only — no details were saved.')">Save demo details</button></div></div></div>
+</section>
+</main>
+<footer><span>© 2026 Earnnest · Built in Kenya, open to the world.</span><span>Fair work · Transparent rewards · Secure payouts</span><span>Prototype only — not a live earning service.</span></footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+let usedToday = false;
+let activePlan = 'Free';
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === id));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nav button').forEach(b => b.addEventListener('click', () => showPage(b.dataset.page)));
+function toast(message) {
+  const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show');
+  clearTimeout(window.toastTimer); window.toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+function applyTask(name) {
+  if (activePlan === 'Free' && usedToday) { toast('Daily free role-open limit reached. Try again after 24 hours.'); return; }
+  if (activePlan === 'Free') { usedToday = true; document.getElementById('dailyCount').textContent = '0 / 1'; document.getElementById('accessText').textContent = 'Free access · daily role open used'; }
+  toast('Demo role opened: ' + name + '. No application was submitted.');
+}
+function choosePlan(name) { toast('Demo selection: ' + name + '. Payment processing is not connected.'); }
+function copyInvite() {
+  const link = 'https://earnnest.example/join/EARNNEST-MK24';
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(() => toast('Demo invite link copied.')).catch(() => toast(link));
+  else toast(link);
+}
+</script>
+</body>
+</html>
